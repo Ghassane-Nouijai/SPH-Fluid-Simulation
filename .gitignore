@@ -1,0 +1,27 @@
+# Build output
+bin/
+build/
+out/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.aps
+*.ncb
+*.sdf
+*.opensdf
+ipch/
+
+# Compiled files
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.lib
+*.dll
+*.exp
+
+.vs/
+x64/
+Dependencies/
