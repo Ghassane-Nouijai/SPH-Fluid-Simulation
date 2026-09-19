@@ -25,6 +25,8 @@
 #include "Camera.h"
 #include "InputProcesses.h"
 
+#include "ParticleSandbox.h"
+
 struct WindowConfig
 {
 	unsigned int width = 1200;
@@ -52,6 +54,7 @@ public:
 		while (!glfwWindowShouldClose(m_Window))
 		{
 			TickTime();
+			m_ParticleSandbox->Update(m_DeltaTime);
 			m_Input.processInput(m_Window, m_Camera, m_DeltaTime);
 			m_World.Update(m_DeltaTime * 10.0f);
 			Render();
@@ -99,101 +102,19 @@ private:
 	{
 		auto Sun = std::make_shared<SimObject>(
 			std::make_unique<Sphere>(2.0f, 64),
-			PhysicsObject(glm::vec3(0.0f, 0.0f, 0.0f),
+			PhysicsObject(glm::vec3(0.0f, 20.0f, 0.0f),
 				1.8729e+10f,            // mass — drives all orbital speeds
 				0.0001f,                   // radius
 				glm::vec3(0.0f),        // no initial velocity
 				0.0f,                   // restitution
-				false,                   // isStatic
+				true,                   // isStatic
 				glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
 			Material::Emissive(glm::vec3(1.0f, 0.95f, 0.7f)));
-
-		// --- Planet 1  |  r =   5.0  |  T ~   62.8s  |  v = 0.500000 -----------
-		auto Planet1 = std::make_shared<SimObject>(
-			std::make_unique<Sphere>(0.25f, 32),
-			PhysicsObject(glm::vec3(5.0f, 0.0f, 0.0f),
-				100000000.0f,
-				0.25f,
-				glm::vec3(0.0f, 0.0f, 0.500000f),
-				0.0f, false,
-				glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
-			Material::Gold());
-
-		// --- Planet 2  |  r =  10.0  |  T ~  177.7s  |  v = 0.353553 -----------
-		auto Planet2 = std::make_shared<SimObject>(
-			std::make_unique<Sphere>(0.30f, 32),
-			PhysicsObject(glm::vec3(10.0f, 0.0f, 0.0f),
-				100000000.0f,
-				0.30f,
-				glm::vec3(0.0f, 0.0f, 0.353553f),
-				0.0f, false,
-				glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
-			Material::Rubber());
-
-		// --- Planet 3  |  r =  20.0  |  T ~  502.7s  |  v = 0.250000 -----------
-		auto Planet3 = std::make_shared<SimObject>(
-			std::make_unique<Sphere>(0.22f, 32),
-			PhysicsObject(glm::vec3(20.0f, 0.0f, 0.0f),
-				10000000000.0f,
-				0.22f,
-				glm::vec3(0.0f, 0.0f, 0.250000f),
-				0.0f, false,
-				glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
-			Material::Gold());
-
-		// --- Planet 4  |  r =  35.0  |  T ~ 1163.7s  |  v = 0.188982 -----------
-		auto Planet4 = std::make_shared<SimObject>(
-			std::make_unique<Sphere>(0.35f, 32),
-			PhysicsObject(glm::vec3(35.0f, 0.0f, 0.0f),
-				200000000.0f,
-				0.35f,
-				glm::vec3(0.0f, 0.0f, 0.188982f),
-				0.0f, false,
-				glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
-			Material::Rubber());
-
-		// --- Planet 5  |  r =  55.0  |  T ~ 2292.3s  |  v = 0.150756 -----------
-		auto Planet5 = std::make_shared<SimObject>(
-			std::make_unique<Sphere>(0.88f, 32),
-			PhysicsObject(glm::vec3(55.0f, 0.0f, 0.0f),
-				800000000.0f,
-				0.88f,
-				glm::vec3(0.0f, 0.0f, 0.150756f),
-				0.0f, false,
-				glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
-			Material::Gold());
-
-		// --- Planet 6  |  r =  80.0  |  T ~ 4021.2s  |  v = 0.125000 -----------
-		auto Planet6 = std::make_shared<SimObject>(
-			std::make_unique<Sphere>(0.80f, 32),
-			PhysicsObject(glm::vec3(80.0f, 0.0f, 0.0f),
-				900000000.0f,
-				0.002f,
-				glm::vec3(0.0f, 0.0f, 0.4000f),
-				0.0f, false,
-				glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
-			Material::Rubber());
-
-		// --- Planet 7  |  r = 110.0  |  T ~ 6483.6s  |  v = 0.106600 -----------
-		auto Planet7 = std::make_shared<SimObject>(
-			std::make_unique<Sphere>(1.0f, 32),
-			PhysicsObject(glm::vec3(110.0f, 0.0f, 0.0f),
-				20000000000.0f,
-				0.0f,
-				glm::vec3(0.0f, 0.0f, 0.106600f),
-				0.0f, false,
-				glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
-			Material::Gold());
-
-		m_Scene.Add(Sun);       m_World.AddPhysicsObject(Sun);
-
-		m_Scene.Add(Planet1);   m_World.AddPhysicsObject(Planet1);
-		m_Scene.Add(Planet2);   m_World.AddPhysicsObject(Planet2);
-		m_Scene.Add(Planet3);   m_World.AddPhysicsObject(Planet3);
-		m_Scene.Add(Planet4);   m_World.AddPhysicsObject(Planet4);
-		m_Scene.Add(Planet5);   m_World.AddPhysicsObject(Planet5);
-		m_Scene.Add(Planet6);   m_World.AddPhysicsObject(Planet6);
-		m_Scene.Add(Planet7);   m_World.AddPhysicsObject(Planet7);
+		
+		m_ParticleSandbox = std::make_unique<ParticleSandbox>(10000, glm::vec3(0.0f, 10.0f, 0.0f),
+			glm::vec3(10.0f, 10.0f, 10.0f));
+		
+		m_Scene.Add(Sun);		m_World.AddPhysicsObject(Sun);
 	}
 
 	void TickTime()
@@ -214,6 +135,7 @@ private:
 		m_Shader->SetUniformMat4("view", m_Camera.GetViewMatrix());
 
 		m_Scene.Draw(*m_Shader);
+		m_ParticleSandbox->Draw(*m_Shader);
 	}
 
 	void RebuildProjection()
@@ -248,6 +170,7 @@ private:
 	std::optional<Shader> m_Shader;
 	Scene           m_Scene;
 	PhysicsWorld    m_World;
+	std::unique_ptr<ParticleSandbox> m_ParticleSandbox;
 
 	glm::mat4       m_Projection;
 

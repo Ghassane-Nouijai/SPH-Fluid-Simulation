@@ -154,6 +154,7 @@
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputProcesses.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="ParticleSandbox.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
     <ClCompile Include="PhysicsWorld.cpp" />
     <ClCompile Include="Rectangle.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="Materials.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="ParticleSandbox.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="PhysicsWorld.h" />
     <ClInclude Include="Rectangle.h" />

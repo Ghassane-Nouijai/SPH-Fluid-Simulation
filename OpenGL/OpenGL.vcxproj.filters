@@ -37,6 +37,9 @@
     <Filter Include="Header Files\ObjectRendering">
       <UniqueIdentifier>{346750d2-d152-422c-a869-c820e85d1331}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Fluid Sim">
+      <UniqueIdentifier>{fb5d645b-e86e-4dae-9477-507059743982}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c">
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="Rectangle.cpp">
       <Filter>Header Files\Objecs</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSandbox.cpp">
+      <Filter>Header Files\Fluid Sim</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +168,9 @@
     </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSandbox.h">
+      <Filter>Header Files\Fluid Sim</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
