@@ -22,13 +22,23 @@ Sphere::Sphere(float radius, unsigned int precision)
 	std::vector<unsigned int> indices = CreateIndices(precision);
 
 	m_Mesh = std::make_unique<Mesh>(vertices, indices, 3);
+
+	VertexBufferLayout vertexLayout;
+	vertexLayout.Push<float>(3);
+	vertexLayout.Push<float>(3);
+
+	VertexBufferLayout instanceLayout;
+	instanceLayout.Push<float>(4);
+
+	m_InstancedMesh = std::make_unique<InstancedMesh>(
+		vertices, indices, vertexLayout, instanceLayout, 10000);
 }
 
 std::vector<float> Sphere::CreateVertices(float radious, unsigned int precision)
 {
 	std::vector<float> vertices;
-	unsigned int stacks = precision / 2;   // latitude bands
-	unsigned int sectors = precision;      // longitude segments
+	unsigned int stacks = precision / 2;   
+	unsigned int sectors = precision;      
 
 	for (unsigned int i = 0; i <= stacks; i++)      
 	{
@@ -36,12 +46,12 @@ std::vector<float> Sphere::CreateVertices(float radious, unsigned int precision)
 		for (unsigned int j = 0; j < sectors; j++)
 		{
 			float theta = 2.0f * pi * (float)j / (float)sectors;
-			vertices.push_back(radious * sin(phi) * cos(theta));  // x
-			vertices.push_back(radious * cos(phi));               // y
-			vertices.push_back(radious * sin(phi) * sin(theta));  // z
-			vertices.push_back(sin(phi) * cos(theta));  // normal x
-			vertices.push_back(cos(phi));               // normal y
-			vertices.push_back(sin(phi) * sin(theta));  // normal z
+			vertices.push_back(radious * sin(phi) * cos(theta));  
+			vertices.push_back(radious * cos(phi));               
+			vertices.push_back(radious * sin(phi) * sin(theta));  
+			vertices.push_back(sin(phi) * cos(theta));  
+			vertices.push_back(cos(phi));               
+			vertices.push_back(sin(phi) * sin(theta));  
 		}
 	}
 	return vertices;
@@ -88,4 +98,15 @@ void Sphere::Draw(Shader& shader, const glm::vec3& position, const glm::quat& or
 	GLCall(glDrawElements(GL_TRIANGLES, m_Mesh->GetCount(), GL_UNSIGNED_INT, nullptr));
 
 	m_Mesh->Unbind();
+}
+
+void Sphere::UpdateInstances(const std::vector<float>& instanceData)
+{
+	m_InstancedMesh->UpdateInstanceData(instanceData);
+}
+
+void Sphere::DrawInstanced(Shader& shader)
+{
+	shader.Bind();
+	m_InstancedMesh->Draw(m_Mesh->GetCount());
 }

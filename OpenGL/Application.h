@@ -43,9 +43,7 @@ public:
 		Init();
 
 		m_Shader.emplace("Material.shader");
-		// Separate shader for particles: the vertex stage reads per-instance
-		// position/scale from a vertex attribute instead of a per-draw
-		// 'model' uniform (see ParticleInstanced.shader).
+
 		m_ParticleShader.emplace("ParticleInstanced.shader");
 
 		BuildScene();
@@ -67,8 +65,6 @@ public:
 			Render();
 			glfwSwapBuffers(m_Window);
 			glfwPollEvents();
-
-			// --- FPS counter (prints once per second) ---
 			++frameCount;
 			double now = glfwGetTime();
 			double elapsed = now - fpsTimer;
@@ -76,10 +72,17 @@ public:
 			{
 				double fps = frameCount / elapsed;
 				double msPerFrame = 1000.0 * elapsed / frameCount;
+				glm::vec3 pMin, pMax;
+				m_ParticleSandbox->GetBounds(pMin, pMax);
+
 				std::cout << "FPS: " << fps
 					<< "  (" << msPerFrame << " ms/frame)"
 					<< "  Particles: " << m_ParticleSandbox->GetParticles().size()
+					<< "  Bounds min(" << pMin.x << ", " << pMin.y << ", " << pMin.z << ")"
+					<< " max(" << pMax.x << ", " << pMax.y << ", " << pMax.z << ")"
 					<< std::endl;
+				m_ParticleSandbox->PrintDebugInfo();
+
 				frameCount = 0;
 				fpsTimer = now;
 			}
@@ -116,37 +119,29 @@ private:
 			throw std::runtime_error("Failed to initialize GLAD");
 
 		glEnable(GL_DEPTH_TEST);
-
-		// Cache projection only rebuilt on resize
 		RebuildProjection();
 	}
-
 	void BuildScene()
 	{
 		auto Sun = std::make_shared<SimObject>(
 			std::make_unique<Sphere>(2.0f, 64),
 			PhysicsObject(glm::vec3(0.0f, 20.0f, 0.0f),
-				1.8729e+10f,            // mass ? drives all orbital speeds
-				0.0001f,                // radius
-				glm::vec3(0.0f),        // no initial velocity
-				0.0f,                   // restitution
-				true,                   // isStatic
+				1.8729e+10f,            
+				0.0001f,                
+				glm::vec3(0.0f),        
+				0.0f,                   
+				true,                   
 				glm::quat(1.0f, 0.0f, 0.0f, 0.0f)),
 			Material::Emissive(glm::vec3(1.0f, 0.95f, 0.7f)));
-
-		// Remember where/what the light is so the particle shader (a
-		// separate program with its own uniform state) can be lit
-		// consistently too - see Render(). A proper Light manager shared by
-		// every shader would be a cleaner long-term fix.
+		
 		m_LightPosition = glm::vec3(0.0f, 20.0f, 0.0f);
 		m_LightColor = glm::vec3(1.0f, 0.95f, 0.7f);
 
-		m_ParticleSandbox = std::make_unique<ParticleSandbox>(100, glm::vec3(0.0f, 10.0f, 0.0f),
-			glm::vec3(10.0f, 10.0f, 10.0f));
+		m_ParticleSandbox = std::make_unique<ParticleSandbox>(500, glm::vec3(0.0f, 2.0f, 0.0f),
+			glm::vec3(2.0f, 2.0f, 2.0f));
 
 		m_Scene.Add(Sun);		m_World.AddPhysicsObject(Sun);
 	}
-
 	void TickTime()
 	{
 		constexpr float MAX_DELTA = 1.0f / 120.0f;
@@ -158,15 +153,13 @@ private:
 	void Render()
 	{
 		m_Renderer.Clear();
-
-		// --- Regular scene (rigid bodies, per-object 'model' uniform) ---
+		
 		m_Shader->Bind();
 		m_Shader->SetUniform3fv("u_ViewPos", m_Camera.Position);
 		m_Shader->SetUniformMat4("projection", m_Projection);
 		m_Shader->SetUniformMat4("view", m_Camera.GetViewMatrix());
 		m_Scene.Draw(*m_Shader);
-
-		// --- Particles (single instanced draw call) ---
+	
 		m_ParticleShader->Bind();
 		m_ParticleShader->SetUniform3fv("u_ViewPos", m_Camera.Position);
 		m_ParticleShader->SetUniformMat4("projection", m_Projection);

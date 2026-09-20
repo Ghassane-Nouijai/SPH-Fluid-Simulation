@@ -52,7 +52,7 @@ void InputProcesses::SetCallbacks(GLFWwindow* window, Camera& camera)
 {
 	m_Camera = &camera;
 
-	// Stash 'this' on the window so the static callbacks below can get back to instance state
+	
 	glfwSetWindowUserPointer(window, this);
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);

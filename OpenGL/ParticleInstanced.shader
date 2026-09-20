@@ -3,7 +3,7 @@
 
 layout(location = 0) in vec3 aPos;
 layout(location = 1) in vec3 aNormal;
-layout(location = 2) in vec4 aInstance; // xyz = world position, w = uniform scale
+layout(location = 2) in vec4 aInstance; 
 
 uniform mat4 projection;
 uniform mat4 view;
@@ -13,9 +13,9 @@ out vec3 v_Normal;
 
 void main()
 {
-    // Uniform scale + no per-instance rotation, so normals need no
-    // re-transform (a normal matrix would only matter for non-uniform
-    // scale or rotation).
+    
+    
+    
     vec3 worldPos = aPos * aInstance.w + aInstance.xyz;
 
     v_FragPos = worldPos;

@@ -6,9 +6,9 @@ struct Material
 	glm::vec3 ambient = glm::vec3(0.0f);
 	glm::vec3 diffuse = glm::vec3(0.0f);
 	glm::vec3 specular = glm::vec3(0.0f);
-	glm::vec3 emissive = glm::vec3(0.0f); // only used when isEmissive = true
+	glm::vec3 emissive = glm::vec3(0.0f); 
 	float     shininess = 1.0f;
-	bool      isEmissive = false;       
+	bool      isEmissive = false;
 
 	static Material Gold()
 	{
@@ -26,6 +26,20 @@ struct Material
 				 {0.7f,  0.7f,  0.7f },
 				 {0.0f,  0.0f,  0.0f },
 				  10.0f, false };
+	}
+
+	
+	
+	
+	
+	
+	static Material Water()
+	{
+		return { {0.10f, 0.20f, 0.30f},
+				 {0.20f, 0.55f, 0.85f},
+				 {0.90f, 0.90f, 0.95f},
+				 {0.0f,  0.0f,  0.0f },
+				  90.0f, false };
 	}
 
 	static Material Emissive(glm::vec3 color = glm::vec3(1.0f))

@@ -38,8 +38,8 @@ void VertexBuffer::SetData(const void* data, unsigned int size)
 	GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID));
 	if (size > m_Capacity)
 	{
-		// Shouldn't normally trigger if the buffer was sized correctly up
-		// front, but grow safely instead of overflowing.
+		
+		
 		GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STREAM_DRAW));
 		m_Capacity = size;
 	}

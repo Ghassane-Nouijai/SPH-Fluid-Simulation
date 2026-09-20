@@ -20,7 +20,7 @@ PhysicsObject::PhysicsObject(glm::vec3 position, float mass, glm::vec3 halfExten
 
 void PhysicsObject::update(float deltaTime)
 {
-	// Upgrade to RK4
+	
 	if (this->m_IsStatic)
 	{
 		return;

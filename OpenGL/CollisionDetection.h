@@ -56,12 +56,12 @@ inline CollisionDetection SphereAABBCollision(const glm::vec3& spherePos, float 
 		return { false, glm::vec3(0.0f), 0.0f };
 	}
 
-	// Sphere center is inside the box
+	
 	glm::vec3 distToMax = halfExtents - localPos;
 	glm::vec3 distToMin = localPos + halfExtents;
 
 	float minDist = distToMax.x;
-	glm::vec3 exitDir(1.0f, 0.0f, 0.0f);  // direction OUT of the box
+	glm::vec3 exitDir(1.0f, 0.0f, 0.0f);  
 
 	if (distToMin.x < minDist) { minDist = distToMin.x; exitDir = glm::vec3(-1.0f, 0.0f, 0.0f); }
 	if (distToMax.y < minDist) { minDist = distToMax.y; exitDir = glm::vec3(0.0f, 1.0f, 0.0f); }

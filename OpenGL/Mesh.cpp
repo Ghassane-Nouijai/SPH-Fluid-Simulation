@@ -5,7 +5,7 @@ Mesh::Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& 
 	m_EBO(indices)
 {
 	m_VAO.Bind();
-	m_VBO.Bind(); // ensure VBO is bound before layout
+	m_VBO.Bind(); 
 	VertexBufferLayout layout;
 	layout.Push<float>(floatsPerVertex);
 	layout.Push<float>(3);

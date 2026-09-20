@@ -89,12 +89,12 @@ void PhysicsWorld::ResolvePair(PhysicsObject& a, PhysicsObject& b, const Collisi
 	float totalInvMass = a.m_InvMass + b.m_InvMass;
 	if (totalInvMass <= 0.0f) return;
 
-	// Positional correction
+	
 	glm::vec3 correction = info.m_Normal * (info.m_Depth / totalInvMass);
 	if (!a.m_IsStatic) a.setPosition(a.getPosition() - correction * a.m_InvMass);
 	if (!b.m_IsStatic) b.setPosition(b.getPosition() + correction * b.m_InvMass);
 
-	// Velocity response
+	
 	glm::vec3 relVel = b.m_Velocity - a.m_Velocity;
 	float     velAlongNormal = glm::dot(relVel, info.m_Normal);
 	if (velAlongNormal > 0.0f) return;

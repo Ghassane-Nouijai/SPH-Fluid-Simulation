@@ -1,6 +1,8 @@
 #include "InstancedMesh.h"
 #include "Renderer.h"
 
+#include <iostream>
+
 namespace
 {
 	unsigned int FloatsPerInstance(const VertexBufferLayout& layout)
@@ -21,16 +23,16 @@ InstancedMesh::InstancedMesh(const std::vector<float>& vertices,
 {
 	m_VAO.Bind();
 
-	// Per-vertex attributes: locations start at 0, divisor 0 (advance every vertex).
+	
 	m_VAO.AddBuffer(m_VBO, vertexLayout, 0, 0);
 
-	// Per-instance attributes: locations continue right after the per-vertex
-	// ones, divisor 1 (advance once per instance, not once per vertex).
+	
+	
 	unsigned int instanceBaseIndex = static_cast<unsigned int>(vertexLayout.GetElements().size());
 	m_VAO.AddBuffer(m_InstanceVBO, instanceLayout, instanceBaseIndex, 1);
 
-	// Element buffer binding is captured as part of the VAO's state, so it
-	// only needs to be bound once here - Draw() just needs to bind the VAO.
+	
+	
 	m_EBO.Bind();
 
 	m_VAO.Unbind();
@@ -47,7 +49,21 @@ void InstancedMesh::UpdateInstanceData(const std::vector<float>& instanceData)
 void InstancedMesh::Draw(unsigned int indexCount) const
 {
 	if (m_ActiveInstanceCount == 0)
+	{
+		
+		
+		
+		
+		static bool warned = false;
+		if (!warned)
+		{
+			std::cout << "[InstancedMesh] Draw() skipped: 0 active instances - "
+				"did you call UpdateInstanceData() with a non-empty buffer this frame?"
+				<< std::endl;
+			warned = true;
+		}
 		return;
+	}
 
 	m_VAO.Bind();
 	GLCall(glDrawElementsInstanced(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr, m_ActiveInstanceCount));

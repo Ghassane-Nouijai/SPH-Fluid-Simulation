@@ -6,6 +6,7 @@
 
 #include "IRenderable.h"
 #include "Mesh.h"
+#include "InstancedMesh.h"
 #include "Shader.h"
 #include "PhysicsObject.h"
 
@@ -13,7 +14,7 @@ class Sphere : public IRenderable
 {
 private:
 	float m_Radius;
-	unsigned int m_Precision; // number of vertices in each circle
+	unsigned int m_Precision; 
 	std::unique_ptr<Mesh> m_Mesh;
 
 public:
@@ -24,4 +25,9 @@ public:
 	std::vector<unsigned int> CreateIndices(unsigned int precision);
 
 	void Draw(Shader& shader, const glm::vec3& position, const glm::quat& orientation) override;
+	void UpdateInstances(const std::vector<float>& instanceData) override;
+	void DrawInstanced(Shader& shader) override;
+
+private:
+	std::unique_ptr<InstancedMesh> m_InstancedMesh;
 };

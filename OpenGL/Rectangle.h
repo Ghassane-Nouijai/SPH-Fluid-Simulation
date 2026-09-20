@@ -17,7 +17,7 @@ class Rectangle : public IRenderable
 private:
 	float m_SideA;
 	float m_SideB;
-	unsigned int m_Precision; // number of vertices in each circle
+	unsigned int m_Precision; 
 	std::unique_ptr<Mesh> m_Mesh;
 
 public:

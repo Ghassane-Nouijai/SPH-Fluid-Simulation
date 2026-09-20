@@ -59,18 +59,18 @@ void main()
     vec3 viewDir  = normalize(u_ViewPos - v_FragPos);
     vec3 halfway  = normalize(lightDir + viewDir);
 
-    // Ambient
+    
     vec3 ambient  = u_Light.ambient * u_Material.ambient;
 
-    // Diffuse
+    
     float diff    = max(dot(norm, lightDir), 0.0);
     vec3 diffuse  = u_Light.diffuse * diff * u_Material.diffuse;
 
-    // Specular (Blinn-Phong)
+    
     float spec    = pow(max(dot(halfway, norm), 0.0), u_Material.shininess);
     vec3 specular = u_Light.specular * spec * u_Material.specular;
 
-    // Emissive term added on top of lighting (for non-light-source glows)
+    
     vec3 emissive = u_Material.emissive;
 
     FragColor = vec4(ambient + diffuse + specular + emissive, 1.0);

@@ -14,10 +14,10 @@ Rectangle::Rectangle(float sideA, float sideB) : m_SideA(sideA), m_SideB(sideB)
 std::vector<float> Rectangle::CreateVertices(float sideA, float sideB)
 {
 	std::vector<float> vertices = {
-		-sideA / 2.0f, -sideB / 2.0f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-		 sideA / 2.0f, -sideB / 2.0f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
-		 sideA / 2.0f,  sideB / 2.0f, 0.0f, 0.0f, 0.0f, 1.0f, // Top-right
-		-sideA / 2.0f,  sideB / 2.0f, 0.0f, 0.0f, 0.0f, 1.0f  // Top-left
+		-sideA / 2.0f, -sideB / 2.0f, 0.0f, 0.0f, 0.0f, 1.0f, 
+		 sideA / 2.0f, -sideB / 2.0f, 0.0f, 0.0f, 0.0f, 1.0f, 
+		 sideA / 2.0f,  sideB / 2.0f, 0.0f, 0.0f, 0.0f, 1.0f, 
+		-sideA / 2.0f,  sideB / 2.0f, 0.0f, 0.0f, 0.0f, 1.0f  
 	};
 	return vertices;
 }
