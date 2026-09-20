@@ -13,7 +13,7 @@
 class IRenderable;
 class Shader;
 
-
+// Full particle state required by the SPH solver.
 struct FluidParticle
 {
     glm::vec3 position;
@@ -23,7 +23,7 @@ struct FluidParticle
     float density;
     float pressure;
     float mass;
-    float radius; 
+    float radius; // PHYSICS radius: used for SPH spacing / box collision only.
 };
 
 class ParticleSandbox
@@ -37,19 +37,20 @@ public:
     void Draw(Shader& shader);
 
     const std::vector<FluidParticle>& GetParticles() const;
- 
+
     void GetBounds(glm::vec3& outMin, glm::vec3& outMax) const;
 
     void PrintDebugInfo() const;
-    
-    float m_SmoothingRadius = 0.8f;   
-    float m_RestDensity = 100.0f;    
-    float m_GasConstant = 200.0f;     
-    float m_Viscosity = 1.0f;         
-    float m_MaxSpeed = 25.0f;         
 
-    
+    float m_SmoothingRadius = 0.8f;   // h
+    float m_RestDensity = 100.0f;    // rho0, roughly water-like
+    float m_GasConstant = 400.0f;     // k, stiffness of the pressure 
+    float m_Viscosity = 0.5f;         // mu
+    float m_MaxSpeed = 30.0f;         // simple safety clamp against blow-ups
+
     float m_RenderScale = 3.0f;
+
+    float m_SpeedColorReference = 6.0f;
 
 private:
     void CreateParticles(std::size_t particleCount);
@@ -62,14 +63,16 @@ private:
     void Integrate(FluidParticle& particle, float deltaTime);
     void ResolveBoxCollision(FluidParticle& particle);
     void SetParticleMaterial(Shader& shader) const;
+
     void UpdateKernelConstants();
 
     std::vector<FluidParticle> m_Particles;
     std::unique_ptr<IRenderable> m_ParticleMesh;
 
     SpatialHashGrid m_Grid;
-    
-    std::vector<uint32_t> m_NeighborScratch;
+
+    std::vector<std::size_t> m_Indices;
+
     std::vector<glm::vec3> m_PositionScratch;
 
     std::vector<float> m_InstanceScratch;
@@ -84,6 +87,7 @@ private:
     glm::quat m_IdentityOrientation;
 
     float m_Accumulator = 0.0f;
+
     float m_KernelRadius = -1.0f;
     float m_Poly6Coefficient = 0.0f;
     float m_SpikyCoefficient = 0.0f;
