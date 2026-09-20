@@ -153,6 +153,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputProcesses.cpp" />
+    <ClCompile Include="InstancedMesh.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ParticleSandbox.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Basic.shader" />
+    <None Include="ParticleInstanced.shader" />
     <None Include="Material.shader" />
     <None Include="PositionTest.shader" />
   </ItemGroup>
@@ -176,7 +178,9 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionDetection.h" />
     <ClInclude Include="InputProcesses.h" />
+    <ClInclude Include="InstancedMesh.h" />
     <ClInclude Include="IRenderable.h" />
+    <ClInclude Include="SPHKernels.h" />
     <ClInclude Include="Materials.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ParticleSandbox.h" />
@@ -186,6 +190,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimObject.h" />
+    <ClInclude Include="SpatialHashGrid.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />

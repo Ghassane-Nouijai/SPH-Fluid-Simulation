@@ -93,6 +93,9 @@
     <ClCompile Include="ParticleSandbox.cpp">
       <Filter>Header Files\Fluid Sim</Filter>
     </ClCompile>
+    <ClCompile Include="InstancedMesh.cpp">
+      <Filter>Header Files\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Basic.shader">
@@ -102,6 +105,9 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="Material.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="ParticleInstanced.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
@@ -171,6 +177,15 @@
     </ClInclude>
     <ClInclude Include="ParticleSandbox.h">
       <Filter>Header Files\Fluid Sim</Filter>
+    </ClInclude>
+    <ClInclude Include="SPHKernels.h">
+      <Filter>Header Files\Fluid Sim</Filter>
+    </ClInclude>
+    <ClInclude Include="SpatialHashGrid.h">
+      <Filter>Header Files\Fluid Sim</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedMesh.h">
+      <Filter>Header Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
