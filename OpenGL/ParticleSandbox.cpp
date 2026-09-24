@@ -18,14 +18,17 @@ ParticleSandbox::ParticleSandbox(std::size_t particleCount,
     , m_BoxHalfExtents(boxHalfExtents)
     , m_Gravity(0.0f, -9.81f, 0.0f)
     , m_Material(Material::Water())
-    , m_Restitution(0.3f)
-    , m_LinearDamping(0.995f)
+    , m_Restitution(0.0f)
+    , m_LinearDamping(1.0f)
     , m_IdentityOrientation(1.0f, 0.0f, 0.0f, 0.0f)
 {
     m_ParticleMesh = std::make_unique<Sphere>(1.0f, 8);
 
     CreateParticles(particleCount);
+    UpdateKernelConstants();
+    BuildNeighborGrid();
     InitializeParticleMasses();
+    ComputeDensityPressure();
 
     m_Indices.resize(m_Particles.size());
     std::iota(m_Indices.begin(), m_Indices.end(), std::size_t{ 0 });
@@ -40,7 +43,7 @@ void ParticleSandbox::CreateParticles(std::size_t particleCount)
     m_Particles.reserve(particleCount);
 
     std::mt19937 rng(42);
-    std::uniform_real_distribution<float> jitter(-0.02f, 0.02f);
+    std::uniform_real_distribution<float> jitter(-0.04f, 0.04f);
 
     float spacing = m_SmoothingRadius * 0.5f;
     int perAxis = static_cast<int>(std::ceil(std::cbrt(static_cast<double>(particleCount))));
@@ -56,14 +59,14 @@ void ParticleSandbox::CreateParticles(std::size_t particleCount)
                 p.position = origin + glm::vec3(x, y, z) * spacing
                     + glm::vec3(jitter(rng), jitter(rng), jitter(rng));
                 p.velocity = glm::vec3(0.0f);
-                p.force = glm::vec3(0.0f);
-                p.density = m_RestDensity;
+                p.acceleration = glm::vec3(0.0f);
+                p.density = 1.0;
                 p.pressure = 0.0f;
-                p.mass = 1.0f; // placeholder corrected by InitializeParticleMasses()
-                p.radius = 0.08f;
+                p.mass = 50.0f; // placeholder corrected by InitializeParticleMasses()
+                p.radius = 0.1f;
 
                 m_Particles.push_back(p);
-                ++created;
+                created++;
             }
 }
 
@@ -169,6 +172,39 @@ void ParticleSandbox::ComputeForces()
             glm::vec3 pressureForce(0.0f);
             glm::vec3 viscosityForce(0.0f);
 
+            glm::vec3 acceleration = m_Gravity;
+
+            const float rhoI = std::max(pi.density, 1e-6f);
+
+            for (uint32_t j : neighbors)
+            {
+                if (j == i)
+                    continue;
+
+                const FluidParticle& pj = m_Particles[j];
+
+                glm::vec3 rVec = pi.position - pj.position;
+                float r = glm::length(rVec);
+
+                if (r <= 1e-6f || r > h)
+                    continue;
+
+                const float rhoJ = std::max(pj.density, 1e-6f);
+
+                acceleration -= pj.mass *
+                    ((pi.pressure / (rhoI * rhoI)) +
+                        (pj.pressure / (rhoJ * rhoJ))) *
+                    SPHKernels::SpikyGradient(rVec, r, h, spikyCoeff);
+
+                acceleration += m_Viscosity * pj.mass *
+                    ((pj.velocity - pi.velocity) / rhoJ) *
+                    SPHKernels::ViscosityLaplacian(r, h, viscCoeff);
+            }
+
+            pi.acceleration = acceleration;
+
+            /*
+            
             for (uint32_t j : neighbors)
             {
                 if (j == i) continue;
@@ -188,13 +224,15 @@ void ParticleSandbox::ComputeForces()
             }
 
             glm::vec3 gravityForce = pi.density * m_Gravity;
-            pi.force = pressureForce + viscosityForce + gravityForce;
+            pi.acceleration = (pressureForce + viscosityForce + gravityForce) / pi.density;
+            
+            */
         });
 }
 
 void ParticleSandbox::Integrate(FluidParticle& particle, float deltaTime)
 {
-    glm::vec3 acceleration = particle.force / particle.density;
+    glm::vec3 acceleration = particle.acceleration;
     particle.velocity += acceleration * deltaTime;
     particle.velocity *= m_LinearDamping;
 
@@ -229,8 +267,8 @@ void ParticleSandbox::Update(float deltaTime)
 {
     UpdateKernelConstants();
 
-    constexpr float kFixedTimestep = 1.0f / 120.0f;
-    constexpr int kMaxSubsteps = 4; // hard cap - see comment below
+    constexpr float kFixedTimestep = 1.0f / 240.0f;
+    constexpr int kMaxSubsteps = 8; // hard cap 
 
     m_Accumulator += deltaTime;
 
@@ -306,6 +344,17 @@ void ParticleSandbox::GetBounds(glm::vec3& outMin, glm::vec3& outMax) const
         outMin = glm::min(outMin, p.position);
         outMax = glm::max(outMax, p.position);
     }
+}
+
+void ParticleSandbox::CalculateTotalEnergy()
+{
+    float TotalEnergy = 0.0f;
+    for (const auto& p : m_Particles)
+    {
+        TotalEnergy += 0.5*p.mass*glm::dot(p.velocity, p.velocity);
+        TotalEnergy += p.mass*p.position.y*9.81;
+    }
+    std::cout << "Total Energy = " << TotalEnergy << std::endl;
 }
 
 void ParticleSandbox::PrintDebugInfo() const

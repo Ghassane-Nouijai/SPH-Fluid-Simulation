@@ -83,10 +83,8 @@ public:
 				std::cout << "FPS: " << fps
 					<< "  (" << msPerFrame << " ms/frame)"
 					<< "  Particles: " << m_ParticleSandbox->GetParticles().size()
-					<< "  Bounds min(" << pMin.x << ", " << pMin.y << ", " << pMin.z << ")"
-					<< " max(" << pMax.x << ", " << pMax.y << ", " << pMax.z << ")"
 					<< std::endl;
-
+				m_ParticleSandbox->CalculateTotalEnergy();
 				// Comment this out when everything is working
 				m_ParticleSandbox->PrintDebugInfo();
 

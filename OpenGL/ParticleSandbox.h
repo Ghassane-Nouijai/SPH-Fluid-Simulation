@@ -13,12 +13,11 @@
 class IRenderable;
 class Shader;
 
-// Full particle state required by the SPH solver.
 struct FluidParticle
 {
     glm::vec3 position;
     glm::vec3 velocity;
-    glm::vec3 force;
+    glm::vec3 acceleration;
 
     float density;
     float pressure;
@@ -42,15 +41,17 @@ public:
 
     void PrintDebugInfo() const;
 
-    float m_SmoothingRadius = 0.8f;   // h
-    float m_RestDensity = 100.0f;    // rho0, roughly water-like
-    float m_GasConstant = 400.0f;     // k, stiffness of the pressure 
-    float m_Viscosity = 0.5f;         // mu
+    void CalculateTotalEnergy();
+
+    float m_SmoothingRadius = 1.0f;   // h
+    float m_RestDensity = 1000.0f;    // rho0, roughly water-like
+    float m_GasConstant = 200.0f;     // k, stiffness of the pressure 
+    float m_Viscosity = 0.8f;         // mu
     float m_MaxSpeed = 30.0f;         // simple safety clamp against blow-ups
 
     float m_RenderScale = 3.0f;
 
-    float m_SpeedColorReference = 6.0f;
+    float m_SpeedColorReference = 10.0f;
 
 private:
     void CreateParticles(std::size_t particleCount);
@@ -88,8 +89,8 @@ private:
 
     float m_Accumulator = 0.0f;
 
-    float m_KernelRadius = -1.0f;
-    float m_Poly6Coefficient = 0.0f;
-    float m_SpikyCoefficient = 0.0f;
+    float m_KernelRadius = 0.0f;
+    float m_Poly6Coefficient = 1.0f;
+    float m_SpikyCoefficient = 1.0f;
     float m_ViscosityCoefficient = 0.0f;
 };
