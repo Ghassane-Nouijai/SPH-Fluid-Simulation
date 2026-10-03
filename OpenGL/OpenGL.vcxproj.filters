@@ -25,20 +25,29 @@
     <Filter Include="Source Files\Vendor">
       <UniqueIdentifier>{754057eb-6533-492d-b36b-8ef1b96c5cf6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Objecs">
-      <UniqueIdentifier>{d50eba1b-21db-463b-ad36-830daa87e26d}</UniqueIdentifier>
+    <Filter Include="Source Files\Vendor\ImGUI">
+      <UniqueIdentifier>{6d8ac1d6-7cbc-4a17-a118-461397a0454b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Rendering">
-      <UniqueIdentifier>{18946fad-50a7-406e-90c8-acd62e627278}</UniqueIdentifier>
+    <Filter Include="Header Files\Renderers">
+      <UniqueIdentifier>{7697ca57-6667-49ff-a813-62335335f16b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Physics">
-      <UniqueIdentifier>{8c76f700-799b-434c-bdf1-f2c9071144d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ObjectRendering">
+    <Filter Include="Header Files\Renderers\ObjectRendering">
       <UniqueIdentifier>{346750d2-d152-422c-a869-c820e85d1331}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Fluid Sim">
+    <Filter Include="Header Files\Renderers\Rendering">
+      <UniqueIdentifier>{18946fad-50a7-406e-90c8-acd62e627278}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Simulation">
+      <UniqueIdentifier>{fb8e9e83-0165-43e8-8023-18364ef4e71c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Simulation\Fluid Sim">
       <UniqueIdentifier>{fb5d645b-e86e-4dae-9477-507059743982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Simulation\Physics">
+      <UniqueIdentifier>{8c76f700-799b-434c-bdf1-f2c9071144d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Simulation\Objecs">
+      <UniqueIdentifier>{d50eba1b-21db-463b-ad36-830daa87e26d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -52,49 +61,64 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IndexBuffer.cpp">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="InputProcesses.cpp">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="VertexArray.cpp">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="VertexBuffer.cpp">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Sphere.cpp">
-      <Filter>Header Files\Objecs</Filter>
+      <Filter>Header Files\Simulation\Objecs</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsObject.cpp">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Simulation\Physics</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsWorld.cpp">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Simulation\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Header Files\ObjectRendering</Filter>
+      <Filter>Header Files\Renderers\ObjectRendering</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>Header Files\ObjectRendering</Filter>
+      <Filter>Header Files\Renderers\ObjectRendering</Filter>
     </ClCompile>
     <ClCompile Include="Rectangle.cpp">
-      <Filter>Header Files\Objecs</Filter>
+      <Filter>Header Files\Simulation\Objecs</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSandbox.cpp">
-      <Filter>Header Files\Fluid Sim</Filter>
+      <Filter>Header Files\Simulation\Fluid Sim</Filter>
     </ClCompile>
     <ClCompile Include="InstancedMesh.cpp">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui.cpp">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui_demo.cpp">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui_draw.cpp">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui_tables.cpp">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui_widgets.cpp">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,76 +140,94 @@
       <Filter>Source Files\Vendor</Filter>
     </ClInclude>
     <ClInclude Include="IndexBuffer.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="InputProcesses.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="VertexArray.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="VertexBuffer.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="VertexBufferLayout.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Sphere.h">
-      <Filter>Header Files\Objecs</Filter>
+      <Filter>Header Files\Simulation\Objecs</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsObject.h">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Simulation\Physics</Filter>
     </ClInclude>
     <ClInclude Include="CollisionDetection.h">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Simulation\Physics</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsWorld.h">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Simulation\Physics</Filter>
     </ClInclude>
     <ClInclude Include="SimObject.h">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Simulation\Physics</Filter>
     </ClInclude>
     <ClInclude Include="IRenderable.h">
-      <Filter>Header Files\ObjectRendering</Filter>
+      <Filter>Header Files\Renderers\ObjectRendering</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files\ObjectRendering</Filter>
+      <Filter>Header Files\Renderers\ObjectRendering</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>Header Files\ObjectRendering</Filter>
+      <Filter>Header Files\Renderers\ObjectRendering</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header Files\ObjectRendering</Filter>
+      <Filter>Header Files\Renderers\ObjectRendering</Filter>
     </ClInclude>
     <ClInclude Include="Rectangle.h">
-      <Filter>Header Files\Objecs</Filter>
+      <Filter>Header Files\Simulation\Objecs</Filter>
     </ClInclude>
     <ClInclude Include="Materials.h">
-      <Filter>Header Files\ObjectRendering</Filter>
+      <Filter>Header Files\Renderers\ObjectRendering</Filter>
     </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSandbox.h">
-      <Filter>Header Files\Fluid Sim</Filter>
+      <Filter>Header Files\Simulation\Fluid Sim</Filter>
     </ClInclude>
     <ClInclude Include="SPHKernels.h">
-      <Filter>Header Files\Fluid Sim</Filter>
+      <Filter>Header Files\Simulation\Fluid Sim</Filter>
     </ClInclude>
     <ClInclude Include="SpatialHashGrid.h">
-      <Filter>Header Files\Fluid Sim</Filter>
+      <Filter>Header Files\Simulation\Fluid Sim</Filter>
     </ClInclude>
     <ClInclude Include="InstancedMesh.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Header Files\Renderers\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imstb_textedit.h">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imstb_truetype.h">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imconfig.h">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui.h">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui_internal.h">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imstb_rectpack.h">
+      <Filter>Source Files\Vendor\ImGUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

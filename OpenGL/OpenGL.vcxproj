@@ -148,6 +148,11 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui.cpp" />
+    <ClCompile Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui_tables.cpp" />
+    <ClCompile Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui_widgets.cpp" />
     <ClCompile Include="..\Dependencies\glad\src\glad.c" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -174,6 +179,12 @@
     <None Include="PositionTest.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imconfig.h" />
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui.h" />
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imgui_internal.h" />
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imstb_rectpack.h" />
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imstb_textedit.h" />
+    <ClInclude Include="..\..\..\..\..\Downloads\imgui-1.92.9b\imgui-1.92.9b\imstb_truetype.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionDetection.h" />
